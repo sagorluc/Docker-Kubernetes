@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - static:/static
+      # - ./backend:/app
+    env_file:
+      - .env
+    # environment:
+    #   - DEBUG=True
+
+  frontend:
+    build:
+      context: ./frontend
+      # dockerfile: Dockerfile
+    volumes:
+      - frontend:/app/build
+    ports:
+      - "80:80"
+
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - static:/static
+      - frontend:/var/www/frontend
+    ports:
+      - "81:81"
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  static:
+  frontend:

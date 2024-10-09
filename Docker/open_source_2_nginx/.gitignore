@@ -1,0 +1,4 @@
+Backend/vrenv
+Backend/db.sqlite3
+.env
+# Frontend/.gitignore
